@@ -11,7 +11,7 @@ public class SettingsData
     public Settings_Camera      Camera      = new Settings_Camera();
     public Settings_Haptics     Haptics     = new Settings_Haptics();
 
-    public void Validate()
+    public void Validate() 
     {
         Metadata.Validate();
 
@@ -51,7 +51,7 @@ public class GraphicsQualityAndResolution
 
     public int Width        = -1;
     public int Height       = -1;
-    public int RefreshRate  = -1;
+    public RefreshRate Rate = new();
     public bool FullScreen  = true;
 
     public GraphicsQualityAndResolution()
@@ -64,7 +64,7 @@ public class GraphicsQualityAndResolution
         QualityLevel    = _qualityLevel;
         Width           = _resolution.width;
         Height          = _resolution.height;
-        RefreshRate     = _resolution.refreshRate;
+        Rate            = _resolution.refreshRateRatio;
         FullScreen      = _fullscreen;
     }    
 
@@ -73,11 +73,11 @@ public class GraphicsQualityAndResolution
         if (QualityLevel < 0)
             QualityLevel    = QualitySettings.names.Length - 1;
 
-        if (Width < 0 || Height < 0 || RefreshRate < 0)
+        if (Width < 0 || Height < 0)
         {
             Width           = Screen.currentResolution.width;
             Height          = Screen.currentResolution.height;
-            RefreshRate     = Screen.currentResolution.refreshRate;
+            Rate            = Screen.currentResolution.refreshRateRatio;
             FullScreen      = Screen.fullScreen;
         }
     }
@@ -86,7 +86,7 @@ public class GraphicsQualityAndResolution
     {
         Width           = _resolution.width;
         Height          = _resolution.height;
-        RefreshRate     = _resolution.refreshRate;
+        Rate            = _resolution.refreshRateRatio;
     }
 
     public void SetQualityLevel(int _qualityLevel)
@@ -99,7 +99,7 @@ public class GraphicsQualityAndResolution
         QualityLevel    = other.QualityLevel;
         Width           = other.Width;
         Height          = other.Height;
-        RefreshRate     = other.RefreshRate;
+        Rate            = other.Rate;
         FullScreen      = other.FullScreen ;
     }
 }
@@ -125,7 +125,7 @@ public class Settings_Graphics
 
     public void ApplySettings()
     {
-        Screen.SetResolution(QualityAndResolution.Width, QualityAndResolution.Height, FullScreenMode.ExclusiveFullScreen, QualityAndResolution.RefreshRate);
+        Screen.SetResolution(QualityAndResolution.Width, QualityAndResolution.Height, FullScreenMode.ExclusiveFullScreen, QualityAndResolution.Rate);
 
         QualitySettings.SetQualityLevel(QualityAndResolution.QualityLevel);
     }
