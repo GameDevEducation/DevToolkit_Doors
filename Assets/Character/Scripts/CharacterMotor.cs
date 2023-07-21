@@ -22,6 +22,7 @@ public class CharacterMotor : MonoBehaviour, IPausable
     [SerializeField] UnityEvent OnPlayLandAudio;
 
     [SerializeField] UnityEvent OnToggleSettingsMenu;
+    [SerializeField] UnityEvent OnInteractPressed;
 
     [SerializeField] ControlSchemeChanged OnControlSchemeChanged;
 
@@ -102,6 +103,11 @@ public class CharacterMotor : MonoBehaviour, IPausable
     {
         if (EnableUpdates)
             OnToggleSettingsMenu?.Invoke();
+    }
+
+    public void OnInteract(InputValue value)
+    {
+        OnInteractPressed.Invoke();
     }
 
     public void OnControlsChanged(PlayerInput input)
